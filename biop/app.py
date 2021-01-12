@@ -34,9 +34,7 @@ def index(seq_id=None):
         app.db.session.add(new_object)
         app.db.session.commit()
 
-        print(url_for("/", seq_id=new_object.seq_id))
-
-        return redirect(url_for("/", seq_id=new_object.seq_id))
+        return redirect(url_for("index", seq_id=new_object.seq_id))
 
     elif seq_id:
         data = Sequence_model.query.get(seq_id)
