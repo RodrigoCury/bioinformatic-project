@@ -1,1 +1,1 @@
-web: cd biop | gunicorn app:app
+web: gunicorn --chdir biop app:app
