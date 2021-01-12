@@ -1,0 +1,6 @@
+biop.egg-info/PKG-INFO
+biop.egg-info/SOURCES.txt
+biop.egg-info/dependency_links.txt
+biop.egg-info/not-zip-safe
+biop.egg-info/requires.txt
+biop.egg-info/top_level.txt
