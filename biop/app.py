@@ -24,9 +24,9 @@ def inject_data():
     return {'today_date': str(datetime.utcnow())}
 
 
-@app.route("/", methods=["GET", "POST"])
-@app.route("/<int:seq_id>", methods=["GET", "POST"])
-def genetic_translator(seq_id=None):
+@app.route("/index/", methods=["GET", "POST"])
+@app.route("/index/<int:seq_id>", methods=["GET", "POST"])
+def index(seq_id=None):
 
     if request.method == "POST":
         data_received = request.form
