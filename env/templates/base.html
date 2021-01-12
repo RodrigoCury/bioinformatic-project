@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}?v={{today_date}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{today_date}}">
+    {% block head %} {% endblock %}
+</head>
+
+
+<body>
+    <header class="sidebar-closed" id="sidebar">
+        <div>
+            <svg class="menu-btn" id="menu-btn" height="20pt" viewBox="0 -53 384 384" width="20pt"
+                xmlns="http://www.w3.org/2000/svg" onclick="menuController.hideShowMenu()">
+                <path
+                    d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />
+                <path
+                    d="m368 32h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />
+                <path
+                    d="m368 277.332031h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0" />
+            </svg>
+        </div>
+
+        <div class="site-tools-closed" id="site-tools">
+            <a class="site-tool-link" href="/genetic-translator">Tradutor genético</a>
+        </div>
+
+        <div class="h-footer-closed" id="h-footer">
+            <a href="http://www.ufu.br"><img class="logo-ufu" id="logo-ufu"
+                    src="{{ url_for('static', filename='img/logo-ufu.png') }}?v={{today_date}} alt=""></a>
+            <a href="https://instagram.com/curyosity">by @curyosity</a>
+        </div>
+    </header>
+
+    {% block main %} {% endblock %}
+
+
+</body>
+
+<script src="{{url_for('static', filename='js/controller/MenuController.js')}}?v={{today_date}}"></script>
+
+<script>
+    let menuController = new MenuController()
+</script>
+
+</html>

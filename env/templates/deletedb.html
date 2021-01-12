@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+<title>DeleteDB</title>
+{% endblock %}
+
+{% block main %}
+<main>
+    <form action="/deletedb" method="post">
+        <h1>Digite a senha para esvaziar o DB</h1>
+        <input type="text" name="password" id="password">
+        <input type="submit" value="forLolz">
+    </form>
+</main>
+
+<script>
+    document.querySelector("header").style.display = "None"
+</script>
+{% endblock %}

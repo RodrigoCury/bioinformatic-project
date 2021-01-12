@@ -1,0 +1,92 @@
+.main-seq-output {
+    margin: 37px 20px;
+}
+
+.seq-output-title {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+
+.seq-output {
+    margin: 10px 0;
+    border: 2px solid #1e00b8;
+    border-radius: 4px;
+    padding: 30px;
+    position: relative;
+}
+
+.seq-output-child {
+    width: calc(100% - 10px);
+    margin-bottom: 25px;
+    position: relative;
+    border: 1px solid #1e00b8;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.seq-header{
+    margin-bottom: 0.5em;
+}
+
+.seq-text {
+    -webkit-transition: height 700ms ease;
+    transition: height 700ms ease;
+    height: 28px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    font-family: monospace;
+
+}
+
+.seq-text-open {
+    height: 300px;
+    -webkit-transition: height 700ms ease;
+    transition: height 700ms ease;
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+    font-family: monospace;
+}
+
+.dna-codificante-btn, .dna-complementar-btn, 
+.dna-complementar-5-btn , .rna-mensageiro-btn,
+.rna-mensageiro-complementar-btn, .proteína-btn,
+.proteína-até-o-stop-códon-btn {
+    position: absolute;
+    left: calc(100% - 33px);
+    top: 5px;
+    border: 1px solid #ffffff00;
+    border-radius: 4px;
+    width: 0.8em;
+    height: 0.8em;
+}
+
+.dna-div-btn, .rna-div-btn, .proteína-div-btn{
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    border: 1px solid #ffffff00;
+    border-radius: 4px;
+}
+
+.dna-codificante-btn:hover, .dna-complementar-btn:hover, 
+.dna-complementar-5-btn:hover , .rna-mensageiro-btn:hover,
+.rna-mensageiro-complementar-btn:hover, .proteína-btn:hover,
+.proteína-até-o-stop-códon-btn:hover,
+.dna-div-btn:hover, .rna-div-btn:hover, .proteína-div-btn:hover {
+    background-color: #d3d3d360;
+    border: 1px solid #b8b8b8;
+}
+
+.dna-codificante-btn:active, .dna-complementar-btn:active, 
+.dna-complementar-5-btn:active , .rna-mensageiro-btn:active,
+.rna-mensageiro-complementar-btn:active, .proteína-btn:active,
+.proteína-até-o-stop-códon-btn:active,
+.dna-div-btn:active, .rna-div-btn:active, .proteína-div-btn:active {
+    background-color: #bebdbd60;
+    border: 1px solid #9c9c9c;
+    box-shadow: 1px 1px 1px black;
+}
+
+.none {
+    display: none;
+}

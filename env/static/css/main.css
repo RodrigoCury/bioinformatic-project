@@ -1,0 +1,87 @@
+
+
+.seq-input-div {
+    margin: 37px 20px;
+}
+
+.seq-input-area {
+    width: calc(100% - 6px);
+    height: 150px;
+    margin: 15px 0;
+    border: 2px solid #1e00b8;
+    font-size: larger;
+}
+
+.seq-input-area-invalid {
+    border: 2px solid red;
+}
+
+.textarea-span {
+    display: none;
+}
+
+.textarea-invalid {
+    color: red;
+}
+
+.seq-type-selector {
+    width: 100%;
+    margin: 5px 0 0 0;
+}
+
+.seq-type-selector-choice {
+    margin-right: 3px;
+}
+
+.seq-todo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.seq-todo-title {
+    margin: 6px 0;
+}
+
+.seq-todo-checkbox {
+    margin: 1px 0;
+}
+
+.seq-todo-tranlation-table {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 2px 0;
+}
+
+.select-translation {
+    width: 200px;
+}
+
+.form-submit {
+    width: 100%;
+    background: linear-gradient(90deg, #021B79, #0575E6, #205E9B);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.form-submit:hover {
+    transition: 0.3s;
+    background-color: #2100c9;
+}
+
+.form-submit:active {
+    box-shadow: 1px 1px 2px black;
+}
+
+.dna-search-btn {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+}

@@ -1,0 +1,113 @@
+header {
+    background: linear-gradient(180deg, #021B79, #0575E6, #205E9B);
+}
+
+.sidebar-closed {
+    transition: 0.9s;
+    position: fixed;
+    top: 0px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    width: 50px;
+    height: 100%;
+    border-right: 1px solid#1e00b8;
+}
+
+.sidebar-open {
+    transition: 0.9s;
+    position: fixed;
+    top: 0px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    width: 200px;
+    height: 100%;
+    border-right: 1px solid#1e00b8;
+}
+
+.main-closed {
+    transition: 0.9s;
+    margin-left: 65px;
+}
+
+.main-open {
+    transition: 0.9s;
+    margin-left: 215px;
+}
+
+.logo-ufu {
+    margin: 10px;
+    height: 30px;
+    width: 30px;
+}
+
+.menu-btn {
+    border: 2px solid  ;
+    padding: 1px;
+    margin: 7px;
+    height: 30px;
+    width: 30px;
+}
+
+.menu-btn:hover {
+    border: 2px solid#1e00b8;
+    transition: 0.5s;
+    border-radius: 2px;
+}
+.menu-btn:active {
+    border-color:#2300d4;
+    box-shadow: 1px 1px 1px black;
+    transition: 0ms;
+}
+
+.site-tools-closed {
+    position: relative;
+    left: -200px;
+    text-decoration: none;
+    transition: 0.6s;
+}
+
+.site-tools-open {
+    position: relative;
+    left: 5px;
+    text-decoration: none;
+    transition: 1.3s;
+}
+
+.site-tool-link {
+    margin-left: 5px;
+    font-size: 15pt;
+    transition: 0.2s;
+}
+
+.site-tool-link:hover {
+    text-decoration: underline;
+    transition: 0.2s;
+}
+
+.site-tool-link:active {
+    text-decoration: underline;
+    color: #000;
+}
+
+.h-footer-closed {
+    font-size: 6pt;
+    display: flex;
+    flex-flow: column;
+}
+
+.h-footer-open {
+    font-size: 6pt;
+    display: flex;
+    flex-flow: column;
+    align-self: stretch;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
