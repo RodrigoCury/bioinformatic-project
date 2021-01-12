@@ -24,8 +24,8 @@ def inject_data():
     return {'today_date': str(datetime.utcnow())}
 
 
-@app.route("/index/", methods=["GET", "POST"])
-@app.route("/index/<int:seq_id>", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
+@app.route("/<int:seq_id>", methods=["GET", "POST"])
 def index(seq_id=None):
 
     if request.method == "POST":
@@ -33,6 +33,8 @@ def index(seq_id=None):
         new_object = Sequence_Helper.parse_form(data_received)
         app.db.session.add(new_object)
         app.db.session.commit()
+
+        print(url_for("/", seq_id=new_object.seq_id))
 
         return redirect(url_for("/", seq_id=new_object.seq_id))
 
