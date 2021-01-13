@@ -1,0 +1,1 @@
+web: gunicorn --chdir biop app:app
