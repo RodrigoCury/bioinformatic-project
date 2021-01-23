@@ -47,10 +47,11 @@
     font-family: monospace;
 }
 
-.dna-codificante-btn, .dna-complementar-btn, 
-.dna-complementar-5-btn , .rna-mensageiro-btn,
-.rna-mensageiro-complementar-btn, .proteína-btn,
-.proteína-até-o-stop-códon-btn {
+.coding-dna-btn, .dna-c-btn, 
+.dna-c-r-btn , .rna-m-btn,
+.rna-c-btn, .frame1-btn,
+.frame2-btn, .frame3-btn,
+.protein-to-stop-codon-btn {
     position: absolute;
     left: calc(100% - 33px);
     top: 5px;
@@ -60,7 +61,7 @@
     height: 0.8em;
 }
 
-.dna-div-btn, .rna-div-btn, .proteína-div-btn{
+.dna-div-btn, .rna-div-btn, .protein-div-btn{
     position: absolute;
     top: 1em;
     right: 1em;
@@ -68,23 +69,40 @@
     border-radius: 4px;
 }
 
-.dna-codificante-btn:hover, .dna-complementar-btn:hover, 
-.dna-complementar-5-btn:hover , .rna-mensageiro-btn:hover,
-.rna-mensageiro-complementar-btn:hover, .proteína-btn:hover,
-.proteína-até-o-stop-códon-btn:hover,
-.dna-div-btn:hover, .rna-div-btn:hover, .proteína-div-btn:hover {
+.coding-dna-btn:hover, .dna-c-btn:hover, 
+.dna-c-r-btn:hover , .rna-m-btn:hover,
+.rna-c-btn:hover, .frame1-btn:hover,
+.frame2-btn:hover, .frame3-btn:hover,
+.dna-div-btn:hover, .rna-div-btn:hover, 
+.protein-div-btn:hover {
     background-color: #d3d3d360;
     border: 1px solid #b8b8b8;
 }
 
-.dna-codificante-btn:active, .dna-complementar-btn:active, 
-.dna-complementar-5-btn:active , .rna-mensageiro-btn:active,
-.rna-mensageiro-complementar-btn:active, .proteína-btn:active,
-.proteína-até-o-stop-códon-btn:active,
-.dna-div-btn:active, .rna-div-btn:active, .proteína-div-btn:active {
+.coding-dna-btn:active, .dna-c-btn:active, 
+.dna-c-r-btn:active , .rna-m-btn:active,
+.rna-c-btn:active, .frame1-btn:active,
+.frame2-btn:active, .frame3-btn:active,
+.dna-div-btn:active, .rna-div-btn:active, .protein-div-btn:active {
     background-color: #bebdbd60;
     border: 1px solid #9c9c9c;
     box-shadow: 1px 1px 1px black;
+}
+
+.seq-table {
+    display:flex;
+    margin: 15px;
+    justify-content: center;
+}
+
+tbody{
+    border: 1px solid #1e00b8;
+    border-radius: 5px;
+}
+
+td {
+    padding: 5px;
+    border: 1px solid #1e00b8;
 }
 
 .none {

@@ -1,21 +1,9 @@
 {% extends 'base.html' %}
 
-{% block head %}
-{% if data %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/sequences.css') }}?v={{today_date}}">
-{% endif %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-
-<title>Bioinfo1</title>
-{% endblock %}
+{% block head %}<title>Genetic Translator</title>{% endblock %}
 
 {% block main %}
 <main class="main-closed">
-
-    {% if data %}
-    <div class="main-seq-output" id="seq-output">
-    </div>
-    {% endif %}
 
     <div class="seq-input-div">
         <form action="/" method="POST">
@@ -27,86 +15,45 @@
 
             <div class="seq-type-selector">
                 <input class="seq-type-selector-choice" type="radio" id="dna-seq" name="seq" value="dna-seq" checked
-                    onchange="sequenceController.checkSequence(); sequenceController.enableDnaRnaCheckboxes()">
-                <label for="dna-seq">DNA</label>
-                <br>
+                    onchange="sequenceController.checkSequence()">
+                <label class="seq-type-selector-label" for="dna-seq">DNA</label>
                 <input class="seq-type-selector-choice" type="radio" id="rna-seq" name="seq" value="rna-seq"
-                    onchange="sequenceController.checkSequence(); sequenceController.enableDnaRnaCheckboxes()">
-                <label for="rna-seq">RNA</label>
-                <br>
+                    onchange="sequenceController.checkSequence()">
+                <label class="seq-type-selector-label" for="rna-seq">RNA</label>
                 <input class="seq-type-selector-choice" type="radio" id="protein-seq" name="seq" value="protein-seq"
-                    onchange="sequenceController.checkSequence(); sequenceController.disableDnaRnaCheckboxes()">
-                <label for="protein-seq">Proteína</label>
+                    onchange="sequenceController.checkSequence()">
+                <label class="seq-type-selector-label" for="protein-seq">Proteína</label>
             </div>
 
-            <div class="seq-todo">
-                <p class="seq-todo-title">Quais dados deve-se retirar da sequência?</p>
-
-                <div class="seq-todo-checkbox" id="coding-dna-div">
-                    <input type="checkbox" checked id="coding-dna" name="coding-dna">
-                    <label for="coding-dna">DNA Codificante</label>
-                </div>
-
-                <div class="seq-todo-checkbox" id="dna-c-div">
-                    <input type="checkbox" checked id="dna-c" name="dna-c">
-                    <label for="dna-c">DNA Complementar</label>
-                </div>
-
-                <div class="seq-todo-checkbox" id="dna-rc-div">
-                    <input type="checkbox" checked id="dna-rc" name="dna-rc">
-                    <label for="dna-rc">DNA Complementar (5`➡3`)</label>
-                </div>
-
-                <div class="seq-todo-checkbox" id="rna-m-div">
-                    <input type="checkbox" checked id="rna-m" name="rna-m">
-                    <label for="rna-m">RNAm</label>
-                </div>
-
-                <div class="seq-todo-checkbox" id="rna-m-c-div">
-                    <input type="checkbox" checked id="rna-m-c" name="rna-m-c">
-                    <label for="rna-m-c">RNAm Complementar</label>
-                </div>
-
-                <div class="seq-todo-checkbox" id="protein-div">
-                    <input type="checkbox" checked id="protein" name="protein">
-                    <label for="protein">Sequência Proteica</label>
-                </div>
-
-                <div class="seq-todo-checkbox" id="protein-to-stop-div">
-                    <input type="checkbox" checked id="protein-to-stop" name="protein-to-stop">
-                    <label for="protein-to-stop">Sequência Proteica (STOP)</label>
-                </div>
-
-                <div class="seq-todo-translation-table">
-                    <label for="translation-table">Origem Genética</label>
-                    <select class="select-translation" name="translation-table" id="translation_table">
-                        <option value="1">The Standard Code</option>
-                        <option value="2">The Vertebrate Mitochondrial Code</option>
-                        <option value="3">The Yeast Mitochondrial Code</option>
-                        <option value="4">The Mold, Protozoan, and Coelenterate Mitochondrial Code and the
-                            Mycoplasma/Spiroplasma Code</option>
-                        <option value="5">The Invertebrate Mitochondrial Code</option>
-                        <option value="6">The Ciliate, Dasycladacean and Hexamita Nuclear Code</option>
-                        <option value="9">The Echinoderm and Flatworm Mitochondrial Code</option>
-                        <option value="10">The Euplotid Nuclear Code</option>
-                        <option value="11">The Bacterial, Archaeal and Plant Plastid Code</option>
-                        <option value="12">The Alternative Yeast Nuclear Code</option>
-                        <option value="13">The Ascidian Mitochondrial Code</option>
-                        <option value="14">The Alternative Flatworm Mitochondrial Code</option>
-                        <option value="16">Chlorophycean Mitochondrial Code</option>
-                        <option value="21">Trematode Mitochondrial Code</option>
-                        <option value="22">Scenedesmus obliquus Mitochondrial Code</option>
-                        <option value="23">Thraustochytrium Mitochondrial Code</option>
-                        <option value="24">Rhabdopleuridae Mitochondrial Code</option>
-                        <option value="25">Candidate Division SR1 and Gracilibacteria Code</option>
-                        <option value="26">Pachysolen tannophilus Nuclear Code</option>
-                        <option value="27">Karyorelict Nuclear Code</option>
-                        <option value="28">Condylostoma Nuclear Code</option>
-                        <option value="29">Mesodinium Nuclear Code</option>
-                        <option value="30">Peritrich Nuclear Code</option>
-                        <option value="31">Blastocrithidia Nuclear Code</option>
-                        <option value="33">Cephalodiscidae Mitochondrial UAA-Tyr Code</option>
-                </div>
+            <div class="seq-todo-translation-table">
+                <label for="translation-table">Origem Genética</label>
+                <select class="select-translation" name="translation-table" id="translation_table">
+                    <option value="1">The Standard Code</option>
+                    <option value="2">The Vertebrate Mitochondrial Code</option>
+                    <option value="3">The Yeast Mitochondrial Code</option>
+                    <option value="4">The Mold, Protozoan, and Coelenterate Mitochondrial Code and the
+                        Mycoplasma/Spiroplasma Code</option>
+                    <option value="5">The Invertebrate Mitochondrial Code</option>
+                    <option value="6">The Ciliate, Dasycladacean and Hexamita Nuclear Code</option>
+                    <option value="9">The Echinoderm and Flatworm Mitochondrial Code</option>
+                    <option value="10">The Euplotid Nuclear Code</option>
+                    <option value="11">The Bacterial, Archaeal and Plant Plastid Code</option>
+                    <option value="12">The Alternative Yeast Nuclear Code</option>
+                    <option value="13">The Ascidian Mitochondrial Code</option>
+                    <option value="14">The Alternative Flatworm Mitochondrial Code</option>
+                    <option value="16">Chlorophycean Mitochondrial Code</option>
+                    <option value="21">Trematode Mitochondrial Code</option>
+                    <option value="22">Scenedesmus obliquus Mitochondrial Code</option>
+                    <option value="23">Thraustochytrium Mitochondrial Code</option>
+                    <option value="24">Rhabdopleuridae Mitochondrial Code</option>
+                    <option value="25">Candidate Division SR1 and Gracilibacteria Code</option>
+                    <option value="26">Pachysolen tannophilus Nuclear Code</option>
+                    <option value="27">Karyorelict Nuclear Code</option>
+                    <option value="28">Condylostoma Nuclear Code</option>
+                    <option value="29">Mesodinium Nuclear Code</option>
+                    <option value="30">Peritrich Nuclear Code</option>
+                    <option value="31">Blastocrithidia Nuclear Code</option>
+                    <option value="33">Cephalodiscidae Mitochondrial UAA-Tyr Code</option>
                 </select>
             </div>
 
@@ -115,6 +62,7 @@
         </form>
     </div>
 
+    {% if received %}<div class="main-seq-output" id="seq-output"></div>{% endif %}
 
 </main>
 
@@ -122,13 +70,18 @@
 <script src="{{url_for('static', filename='js/helpers/SequenceRegEx.js')}}?v={{today_date}}"></script>
 <script src="{{url_for('static', filename='js/views/View.js')}}?v={{today_date}}"></script>
 <script src="{{url_for('static', filename='js/views/SequencesView.js')}}?v={{today_date}}"></script>
-{% if data %}
+{% if received %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sequences.css') }}?v={{today_date}}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 <script>
-    var dataset = {{ data | safe }}
+    const dnaData = {{ dna_data | safe }}
+    const rnaData = {{ rna_data | safe }}
+    const proteinData = {{ protein_data | safe }}
+    const sequenceController = new SequencerController(dnaData, rnaData, proteinData)
 </script>
-{% endif %}
+{% else %}
 <script>
     const sequenceController = new SequencerController()
 </script>
-
+{% endif %}
 {% endblock %}

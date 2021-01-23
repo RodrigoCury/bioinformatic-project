@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}?v={{today_date}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}?v={{today_date}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     {% block head %} {% endblock %}
 </head>
 
@@ -31,7 +32,7 @@
 
         <div class="h-footer-closed" id="h-footer">
             <a href="http://www.ufu.br"><img class="logo-ufu" id="logo-ufu"
-                    src="{{ url_for('static', filename='img/logo-ufu.png') }}?v={{today_date}} alt=""></a>
+                    src="{{ url_for('static', filename='img/logo-ufu.png') }}?v={{today_date}}"></a>
             <a href=" https://instagram.com/curyosity">by @curyosity</a>
         </div>
     </header>

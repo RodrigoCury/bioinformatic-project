@@ -1,5 +1,5 @@
 class View {
-    constructor(element, $) {
+    constructor(element) {
         this._ElementHTML = element
     }
 

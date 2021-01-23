@@ -25,26 +25,18 @@
 }
 
 .seq-type-selector {
+    display: flexbox;
+    flex-flow: row;
     width: 100%;
-    margin: 5px 0 0 0;
+    margin: 5px 0 10px 0;
 }
 
 .seq-type-selector-choice {
     margin-right: 3px;
 }
 
-.seq-todo {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.seq-todo-title {
-    margin: 6px 0;
-}
-
-.seq-todo-checkbox {
-    margin: 1px 0;
+.seq-type-selector-label {
+    margin-right : 10px;
 }
 
 .seq-todo-tranlation-table {
@@ -56,6 +48,7 @@
 
 .select-translation {
     width: 200px;
+    margin-bottom: 15px;
 }
 
 .form-submit {
