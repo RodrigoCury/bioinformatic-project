@@ -25,7 +25,7 @@ class Alignment_model(db.Model):
     seq2 = db.Column(db.String, nullable=False)
     alignment_type = db.Column(db.String, nullable=False)
     creationDate = db.Column(
-        db.DateTime, nullable=False, defalt=datetime.utcnow)
+        db.DateTime, nullable=False, default=datetime.datetime.utcnow)
 
     def __str__(self):
         return f"ID: {self.align_id}; \n 1st Sequence: {self.seq1} \n ; 2nd Sequence: {self.seq2}; \n"
