@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 import datetime
+import json
 
 from model import db
 from model import Sequence_model
@@ -29,7 +30,7 @@ def inject_data():
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/<int:seq_id>", methods=["GET", "POST"])
-def index(seq_id=None):
+def genetic_translator(seq_id=None):
 
     def _add_to_db(req):
         try:
@@ -49,7 +50,7 @@ def index(seq_id=None):
     if request.method == "POST":
         new_id, err = _add_to_db(request)
         # TODO implement error message if unable adding sequence to db
-        return redirect(url_for("index", seq_id=new_id, add_to_db_error=err))
+        return redirect(url_for("genetic_translator", seq_id=new_id, add_to_db_error=err))
 
     elif seq_id:
         try:
@@ -65,17 +66,31 @@ def index(seq_id=None):
             dna_data, rna_data, protein_data = Sequencer.manage_sequence(
                 data_to_process)
 
-            return render_template("index.html",
+            return render_template("genetic-translator.html",
                                    received=True, dna_data=dna_data, rna_data=rna_data, protein_data=protein_data)
 
         except Exception as e:
             print(e)
             print(f"Sequence ID '{seq_id}' is not on our database")
         # TODO implement on HTML message if seq_id is not on db
-            return render_template("index.html", seq_not_in_db=True)
+            return render_template("genetic-translator.html", seq_not_in_db=True)
 
     else:
-        return render_template("index.html")
+        return render_template("genetic-translator.html")
+
+
+@app.route("/seq_alignment", methods=["GET", "POST"])
+@app.route("/seq_alignment/<int:align_id>", methods=["GET", "POST"])
+def seq_alignment(align_id=None):
+    if request.method == "POST":
+        print("POST")
+        try:
+            test = json.dumps(request.form)
+            return str(test)
+        except Exception as e:
+            return str(e)
+    else:
+        return "OK"
 
 
 @app.route("/deletedb", methods=["POST", "GET"])
