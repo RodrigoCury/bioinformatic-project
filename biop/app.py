@@ -4,11 +4,11 @@ import datetime
 import json
 
 from model import db
-from model import Sequence_model
+from model import Sequence_model, Alignment_model
 from pyHelpers.Sequence_helper import Sequence_Helper
+from pyHelpers.Aligner import Aligner
 from pyHelpers.Sequencer import Sequencer
 from datetime import datetime
-from project_dataclasses.Sequence_dataclass import DataBase_Sequence
 
 
 def create_flask_app():
@@ -32,39 +32,15 @@ def inject_data():
 @app.route("/<int:seq_id>", methods=["GET", "POST"])
 def genetic_translator(seq_id=None):
 
-    def _add_to_db(req):
-        try:
-            data_received = req.form
-            new_object = Sequence_Helper.parse_form(data_received)
-            db.session.add(new_object)
-            db.session.commit()
-
-            # Return the object id to reload a new page and None to show no error messages
-            return new_object.seq_id, None
-        except Exception as e:
-            print("Failed to add to Database a new sequence")
-            print(e)
-            # Return no seq_id to reload a new page and True to show error messages on load
-            return None, True
-
     if request.method == "POST":
-        new_id, err = _add_to_db(request)
+        new_id, err = add_to_db(Sequence_Helper.parse_form(request.form))
         # TODO implement error message if unable adding sequence to db
         return redirect(url_for("genetic_translator", seq_id=new_id, add_to_db_error=err))
 
     elif seq_id:
         try:
-            data = Sequence_model.query.get(seq_id).__dict__
-
-            # transform the data into a workable dataclass to process
-            data_to_process = DataBase_Sequence(seq_id=data['seq_id'],
-                                                sequence=data['sequence'],
-                                                seq_type=data['seq_type'],
-                                                translation_table=data['translation_table'],
-                                                creation_date=data['creationDate'])
-
-            dna_data, rna_data, protein_data = Sequencer.manage_sequence(
-                data_to_process)
+            dna_data, rna_data, protein_data = Sequence_Helper.manage_db(
+                seq_id)
 
             return render_template("genetic-translator.html",
                                    received=True, dna_data=dna_data, rna_data=rna_data, protein_data=protein_data)
@@ -82,15 +58,42 @@ def genetic_translator(seq_id=None):
 @app.route("/seq_alignment", methods=["GET", "POST"])
 @app.route("/seq_alignment/<int:align_id>", methods=["GET", "POST"])
 def seq_alignment(align_id=None):
+
     if request.method == "POST":
-        print("POST")
-        try:
-            test = json.dumps(request.form)
-            return str(test)
-        except Exception as e:
-            return str(e)
+
+        new_id, err = add_to_db(Aligner.parse_form(request.form))
+        if err:
+            print(err)
+            return "NOT OKAY"
+        return "OK, DB id = " + str(new_id)
+
+    elif align_id:
+        alignment_list, err = Aligner.align(align_id)
+        if err:
+            print(err)
+            return str(err)
+        lista = [al.__dict__ for al in alignment_list]
+        return json.dumps(lista)
+
     else:
-        return "OK"
+        pass
+
+    if request.method == "POST":
+
+        new_id, err = add_to_db(Aligner.parse_form(request.form))
+        if err:
+            return render_template("seq-alignment.html", err=err)
+        return render_template("seq-alignment.html", align_id=new_id)
+
+    elif align_id:
+        alignment_list, err = Aligner.align(align_id)
+        if err:
+            return render_template("seq-alignment.html", err=err)
+        lista = [al.__dict__ for al in alignment_list]
+        return render_template("seq-alignment.html", alignment_list=lista)
+
+    else:
+        return render_template("seq-alignment.html")
 
 
 @app.route("/deletedb", methods=["POST", "GET"])
@@ -108,5 +111,17 @@ def deletdb():
         return render_template("deletedb.html")
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+def add_to_db(db_object):
+    try:
+        db.session.add(db_object)
+        db.session.commit()
+
+        # Return the object id to reload a new page and None to show no error messages
+        return db_object.id, None
+
+    except Exception as err:
+        print("Failed to add to Database a new sequence")
+        print(err)
+
+        # Return no seq_id to reload a new page and True to show error messages on load
+        return None, True
