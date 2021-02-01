@@ -65,35 +65,36 @@ def seq_alignment(align_id=None):
         if err:
             print(err)
             return "NOT OKAY"
-        return "OK, DB id = " + str(new_id)
+        return redirect(url_for("seq_alignment", align_id=new_id, add_to_db_error=err))
 
     elif align_id:
-        alignment_list, err = Aligner.align(align_id)
+        epsilon, algorithm, alignment_list, err = Aligner.align(align_id)
         if err:
+            print("AAAAAAAAAAAAAA")
             print(err)
-            return str(err)
-        lista = [al.__dict__ for al in alignment_list]
+            print("AAAAAAAAAAAAAA")
+        lista = alignment_list
         return json.dumps(lista)
 
     else:
         pass
 
-    if request.method == "POST":
+    # if request.method == "POST":
 
-        new_id, err = add_to_db(Aligner.parse_form(request.form))
-        if err:
-            return render_template("seq-alignment.html", err=err)
-        return render_template("seq-alignment.html", align_id=new_id)
+    #     new_id, err = add_to_db(Aligner.parse_form(request.form))
+    #     if err:
+    #         return render_template("seq-alignment.html", err=err)
+    #     return redirect(url_for("seq_alignment", align_id=new_id, add_to_db_error=err))
 
-    elif align_id:
-        alignment_list, err = Aligner.align(align_id)
-        if err:
-            return render_template("seq-alignment.html", err=err)
-        lista = [al.__dict__ for al in alignment_list]
-        return render_template("seq-alignment.html", alignment_list=lista)
+    # elif align_id:
+    #     epsilon, algorithm, alignment_list, err = Aligner.align(align_id)
+    #     if err:
+    #         return render_template("seq-alignment.html", err=err)
+    #     lista = [al.__dict__ for al in alignment_list]
+    #     return render_template("seq-alignment.html", alignment_list=lista, epsilon=epsilon, algorithm=algorithm)
 
-    else:
-        return render_template("seq-alignment.html")
+    # else:
+    #     return render_template("seq-alignment.html")
 
 
 @app.route("/deletedb", methods=["POST", "GET"])
@@ -101,11 +102,14 @@ def deletdb():
     if request.method == "POST":
         password = request.form["password"]
         if password == "debunkthatshit":
-            all_sequences = Sequence_model.query.all()
+            all_sequences = [
+                Sequence_model.query.all(), Alignment_model.query.all()]
             if all_sequences:
-                for seq in all_sequences:
-                    app.db.session.delete(seq)
-        app.db.session.commit()
+                for model in all_sequences:
+                    for data in model:
+                        print(data)
+                        # db.session.delete(data)
+        db.session.commit()
         return "Done"
     else:
         return render_template("deletedb.html")
@@ -125,3 +129,9 @@ def add_to_db(db_object):
 
         # Return no seq_id to reload a new page and True to show error messages on load
         return None, True
+
+# TODO Create a Logging of errors and access
+
+
+def Logging(err, access):
+    pass
