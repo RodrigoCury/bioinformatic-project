@@ -84,7 +84,8 @@ class Aligner():
                                alignment_type=form.get("alignment_type"),
                                score_schema=form.get("score_schema"),
                                substitution_matrix=form.get(
-                                   "substitution_matrix"),
+                                   "substitution_matrix") if form.get(
+                                   "substitution_matrix") != "" else None,
                                match_score=form.get("match_score"),
                                mismatch_score=form.get("mismatch_score"),
                                gap_score=form.get("gap_score"),

@@ -7,7 +7,6 @@ from model import db
 from model import Sequence_model, Alignment_model
 from pyHelpers.Sequence_helper import Sequence_Helper
 from pyHelpers.Aligner import Aligner
-from pyHelpers.Sequencer import Sequencer
 from datetime import datetime
 
 
@@ -33,6 +32,7 @@ def inject_data():
 def genetic_translator(seq_id=None):
 
     if request.method == "POST":
+
         new_id, err = add_to_db(Sequence_Helper.parse_form(request.form))
         # TODO implement error message if unable adding sequence to db
         return redirect(url_for("genetic_translator", seq_id=new_id, add_to_db_error=err))
@@ -59,42 +59,48 @@ def genetic_translator(seq_id=None):
 @app.route("/seq_alignment/<int:align_id>", methods=["GET", "POST"])
 def seq_alignment(align_id=None):
 
-    if request.method == "POST":
-
-        new_id, err = add_to_db(Aligner.parse_form(request.form))
-        if err:
-            print(err)
-            return "NOT OKAY"
-        return redirect(url_for("seq_alignment", align_id=new_id, add_to_db_error=err))
-
-    elif align_id:
-        epsilon, algorithm, alignment_list, err = Aligner.align(align_id)
-        if err:
-            print("AAAAAAAAAAAAAA")
-            print(err)
-            print("AAAAAAAAAAAAAA")
-        lista = alignment_list
-        return json.dumps(lista)
-
-    else:
-        pass
-
     # if request.method == "POST":
 
     #     new_id, err = add_to_db(Aligner.parse_form(request.form))
     #     if err:
-    #         return render_template("seq-alignment.html", err=err)
+    #         print(err)
+    #         return "NOT OKAY"
     #     return redirect(url_for("seq_alignment", align_id=new_id, add_to_db_error=err))
 
     # elif align_id:
     #     epsilon, algorithm, alignment_list, err = Aligner.align(align_id)
     #     if err:
-    #         return render_template("seq-alignment.html", err=err)
-    #     lista = [al.__dict__ for al in alignment_list]
-    #     return render_template("seq-alignment.html", alignment_list=lista, epsilon=epsilon, algorithm=algorithm)
+    #         print("AAAAAAAAAAAAAA")
+    #         print(err)
+    #         print("AAAAAAAAAAAAAA")
+    #     lista = alignment_list
+    #     return json.dumps(lista)
 
     # else:
-    #     return render_template("seq-alignment.html")
+    #     pass
+
+    if request.method == "POST":
+        import pprint
+        pprint.pprint(dict(request.form))
+
+        new_id, err = add_to_db(Aligner.parse_form(request.form))
+        if err:
+            return render_template("seq-alignment.html", err=err)
+        return redirect(url_for("seq_alignment", align_id=new_id, add_to_db_error=err))
+
+    elif align_id:
+        epsilon, algorithm, alignment_list, err = Aligner.align(align_id)
+        print(algorithm)
+        print(epsilon)
+        print(alignment_list)
+        print(json.dumps(alignment_list))
+        if err:
+            print(err)
+            return render_template("seq-alignment.html", err=err)
+        return render_template("seq-alignment.html", alignment_list=json.dumps(alignment_list), epsilon=epsilon, algorithm=algorithm)
+
+    else:
+        return render_template("seq-alignment.html")
 
 
 @app.route("/deletedb", methods=["POST", "GET"])
@@ -107,8 +113,7 @@ def deletdb():
             if all_sequences:
                 for model in all_sequences:
                     for data in model:
-                        print(data)
-                        # db.session.delete(data)
+                        db.session.delete(data)
         db.session.commit()
         return "Done"
     else:
@@ -131,7 +136,3 @@ def add_to_db(db_object):
         return None, True
 
 # TODO Create a Logging of errors and access
-
-
-def Logging(err, access):
-    pass
