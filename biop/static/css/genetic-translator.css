@@ -25,7 +25,7 @@
 }
 
 .seq-type-selector {
-    display: flexbox;
+    display: flex;
     flex-flow: row;
     width: 100%;
     margin: 5px 0 10px 0;
@@ -62,19 +62,4 @@
     display: inline-block;
     font-size: 16px;
     transition: 0.3s;
-}
-
-.form-submit:hover {
-    transition: 0.3s;
-    background-color: #2100c9;
-}
-
-.form-submit:active {
-    box-shadow: 1px 1px 2px black;
-}
-
-.dna-search-btn {
-    width: 40px;
-    height: 40px;
-    margin: 5px;
 }
