@@ -42,4 +42,7 @@ class SequenceRegEx {
         return !this._regexProtein[translationTable].test(sequence)
     }
 
+    checkProteinAlign(sequence) {
+        return !this._regexProtein['1'].test(sequence)
+    }
 }
