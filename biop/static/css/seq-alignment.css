@@ -1,0 +1,93 @@
+.sequence-input{
+    padding:10px;
+    border: 2px solid #1e00b8;
+    border-radius:5px;
+    margin: 15px 15px 15px 0px;
+}
+
+.sequences {
+    display: flex;
+    flex-direction: row;   
+    align-items: center;
+}
+
+.sequence {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    width: 100%;
+}
+
+.seq-input-area-invalid {
+    border: 1px solid red;
+}
+
+.textarea-span {
+    display: none;
+}
+
+.textarea-invalid {
+    color: red;
+}
+
+
+textarea {
+    border: 1px solid #1e00b8;
+    border-radius: 2px;
+    margin: 5px 0;
+}
+
+.score-input {
+    width: 3.5em;
+}
+
+.selector {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+.selection, .substitution-matrix{
+    margin-left: 15px;
+}
+
+.score-selector {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 4.5em 1fr 4.5em 1fr;
+    align-items: center;
+    border: 1px solid #1e00b8;
+    border-radius: 5px;
+}
+
+.score-selector > label, .score-selector > input {
+    margin: 5px;
+    height: 1em;
+    font-size: .85em;
+}
+.form-submit {
+    width: 100%;
+    background: linear-gradient(90deg, #021B79, #0575E6, #205E9B);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.form-submit:hover {
+    transition: 0.3s;
+    background-color: #2100c9;
+}
+
+.form-submit:active {
+    box-shadow: 1px 1px 2px black;
+}
+
+.none{
+    display: none;
+}

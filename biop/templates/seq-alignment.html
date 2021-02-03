@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<title>Sequence Alignment</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/seq-alignment.css') }}?v={{today_date}}">
+{% endblock %}
+
+{% block main %}
+<main class="main-closed">
+    <section class="sequence-input">
+        <article>
+            <!-- ADICIONAR TEXTO AQUI -->
+        </article>
+        <section class="alignment-form">
+            <form action="#" method="post">
+                <div class="sequences">
+                    <div class="sequence">
+                        <label for="target_seq">Sequência 1</label>
+                        <textarea name="target_seq" id="target-seq" cols="30" rows="10"
+                            oninput="seqAlignmentControler.checkSequence('target-seq')"></textarea>
+                        <p class="textarea-span textarea-invalid" id="target-seq-span">A Sequencia acima é inválida</p>
+                    </div>
+                    <div class="sequence">
+                        <label for="query_seq">Sequência 2</label>
+                        <textarea name="query_seq" id="query-seq" cols="30" rows="10"
+                            oninput="seqAlignmentControler.checkSequence('query-seq')"></textarea>
+                        <p class="textarea-span textarea-invalid" id="query-seq-span">A Sequencia acima é inválida</p>
+                    </div>
+                </div>
+                <div class="selector">
+                    <p style="font-weight:bold;">Tipo da sequência:</p>
+                    <input class="selection" type="radio" name="seq-type" id="dna-seq" value="dna_seq" checked
+                        onclick="seqAlignmentControler.onClickDNA()">
+                    <label class="label" for="dna_seq">DNA</label>
+                    <input class="selection" type="radio" name="seq-type" id="rna-seq" value="rna_seq"
+                        onclick="seqAlignmentControler.onClickRNA()">
+                    <label class="label" for="rna_seq">RNA</label>
+                    <input class="selection" type="radio" name="seq-type" id="protein-seq" value="protein_seq"
+                        onclick="seqAlignmentControler.onClickProtein()">
+                    <label class="label" for="protein_seq">Proteína</label>
+                </div>
+                <div class="selector" id="alignment-type-div">
+                    <p style="font-weight:bold;">Tipo do alinhamento:</p>
+                    <input class="selection" type="radio" name="alignment_type" id='local' value="local" checked>
+                    <label class="label" for="local">Local</label>
+                    <input class="selection" type="radio" name="alignment_type" id='global' value="global">
+                    <label class="label" for="global">Global</label>
+                </div>
+                <div class="selector" id="score-schema-div">
+                    <p style="font-weight:bold;">Pontuação:</p>
+                    <input class="selection" type="radio" name="score_schema" id="simple-score" value="simple" checked
+                        onclick="seqAlignmentControler.onClickSimple()">
+                    <label class="label" for="simple-score">Simples</label>
+                    <input class="selection" type="radio" name="score_schema" id="complex-score" value="complex"
+                        onclick="seqAlignmentControler.onClickComplex()">
+                    <label class="label" for="complex-score">Avançada</label>
+                </div>
+                <div class="selector none" id="substitution-matrix-protein-div">
+                    <label class="label" style="font-weight:bold;" for="substitution_matrix">Matriz de
+                        Substituição</label>
+                    <select name="substitution_matrix" id="substitution-matrix-protein" class="substitution-matrix"
+                        disabled>
+                        <option value="BENNER22">BENNER22</option>
+                        <option value="BENNER6">BENNER6</option>
+                        <option value="BENNER74">BENNER74</option>
+                        <option value="BLOSUM45">BLOSUM45</option>
+                        <option value="BLOSUM50">BLOSUM50</option>
+                        <option value="BLOSUM62" selected>BLOSUM62</option>
+                        <option value="BLOSUM80">BLOSUM80</option>
+                        <option value="BLOSUM90">BLOSUM90</option>
+                        <option value="DAYHOFF">DAYHOFF</option>
+                        <option value="FENG">FENG</option>
+                        <option value="GENETIC">GENETIC</option>
+                        <option value="GONNET1992">GONNET1992</option>
+                        <option value="JOHNSON">JOHNSON</option>
+                        <option value="JONES">JONES</option>
+                        <option value="LEVIN">LEVIN</option>
+                        <option value="MCLACHLAN">MCLACHLAN</option>
+                        <option value="MDM78">MDM78</option>
+                        <option value="NUC.4.4">NUC.4.4</option>
+                        <option value="PAM250">PAM250</option>
+                        <option value="PAM30">PAM30</option>
+                        <option value="PAM70">PAM70</option>
+                        <option value="RAO">RAO</option>
+                        <option value="RISLER">RISLER</option>
+                        <option value="STR">STR</option>
+                    </select>
+                </div>
+                <div class="selector" id="substitution-matrix-dna-div">
+                    <label style="font-weight:bold;" class="label" for="substitution_matrix">Matriz de
+                        Substituição</label>
+                    <select name="substitution_matrix" id="substitution-matrix-dna" class="substitution-matrix"
+                        onclick="seqAlignmentControler.onChangeSubMatrixDNA()">
+                        <option selected value>Nenhum</option>
+                        <option value="SCHNEIDER">SCHNEIDER</option>
+                    </select>
+                </div>
+                <div class="score-selector" id="simple-score-div">
+                    <input name="match_score" id="match-score" class="score-input" type="number" value="1">
+                    <label id="match-score">Match Score</label>
+                    <input name="mismatch_score" id="mismatch-score" class="score-input" type="number" value="-1">
+                    <label id="mismatch-score">Mismatch Score</label>
+                    <input name="gap_score" class="score-input" type="number" value="-2.5">
+                    <label>Gap Score</label>
+                </div>
+                <div class="score-selector none" id="complex-score-div">
+                    <input name="match_score" id="match-score" class="score-input" type="number" disabled value="1">
+                    <label id="match-score">Match Score</label>
+
+                    <input name="mismatch_score" id="mismatch-score" class="score-input" type="number" disabled
+                        value="-1">
+                    <label id="mismatch-score">Mismatch Score</label>
+
+                    <input name="target_internal_open_gap_score" class="score-input" type="number" disabled
+                        value="-2.5">
+                    <label>Abrir gap interno da sequência 1</label>
+
+                    <input name="target_internal_extend_gap_score" class="score-input" type="number" disabled value="0">
+                    <label>Extender gap interno da sequência 1</label>
+
+                    <input name="target_left_open_gap_score" class="score-input" type="number" disabled value="-2.5">
+                    <label>Abrir gap no ínicio da sequência 1</label>
+
+                    <input name="target_left_extend_gap_score" class="score-input" type="number" disabled value="0">
+                    <label>Extender gap no ínicio da sequência 1</label>
+
+                    <input name="target_right_open_gap_score" class="score-input" type="number" disabled value="-2.5">
+                    <label>Abrir gap no fim da sequência 1</label>
+
+                    <input name="target_right_extend_gap_score" class="score-input" type="number" disabled value="0">
+                    <label>Extender gap no fim da sequência 1</label>
+
+                    <input name="query_internal_open_gap_score" class="score-input" type="number" disabled value="-2.5">
+                    <label>Abrir gap interno da sequência 2</label>
+
+                    <input name="query_internal_extend_gap_score" class="score-input" type="number" disabled value="0">
+                    <label>Extender gap interno da sequência 2</label>
+
+                    <input name="query_left_open_gap_score" class="score-input" type="number" disabled value="-2.5">
+                    <label>Abrir gap no ínicio da sequência 2</label>
+
+                    <input name="query_left_extend_gap_score" class="score-input" type="number" disabled value="0">
+                    <label>Extender gap no ínicio da sequência 2</label>
+
+                    <input name="query_right_open_gap_score" class="score-input" type="number" disabled value="-2.5">
+                    <label>Abrir gap no fim da sequência 2</label>
+
+                    <input name="query_right_extend_gap_score" class="score-input" type="number" disabled value="0">
+                    <label>Extender gap no fim da sequência 2</label>
+
+                </div>
+                <input class="form-submit" id="form-submit" type="submit" value="Alinhar">
+            </form>
+        </section>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('static', filename='js/controller/SeqAlignmentControler.js')}}?v={{today_date}}"></script>
+<script src="{{url_for('static', filename='js/helpers/SequenceRegEx.js')}}?v={{today_date}}"></script>
+<script>
+    const seqAlignmentControler = new SeqAlignmentControler()
+</script>
+{% endblock %}
