@@ -4,11 +4,23 @@
 {% block head %}
 <title>Sequence Alignment</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/seq-alignment.css') }}?v={{today_date}}">
+{% if received %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/alignments.css') }}?v={{today_date}}">{% endif %}
 {% endblock %}
 
 {% block main %}
 <main class="main-closed">
-    <section class="sequence-input">
+    <section class="sequence-input" id="sequence-input">
+        {% if received %}
+        <div class="form-parent-node" id="form-parent-node">
+            <svg class="form-parent-node-btn" onclick='seqAlignmentControler.toggleDiv("sequence-input")'
+                viewBox="0 0 24 24">
+                <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z" />
+            </svg>
+            <h1 class="new-alignment">Novo Alinhamento</h1>
+
+        </div>
+        {% endif %}
         <article>
             <!-- ADICIONAR TEXTO AQUI -->
         </article>
@@ -19,13 +31,15 @@
                         <label for="target_seq">Sequência 1</label>
                         <textarea name="target_seq" id="target-seq" cols="30" rows="10"
                             oninput="seqAlignmentControler.checkSequence('target-seq')"></textarea>
-                        <p class="textarea-span textarea-invalid" id="target-seq-span">A Sequencia acima é inválida</p>
+                        <p class="textarea-span textarea-invalid" id="target-seq-span">A Sequência acima é inválida
+                        </p>
                     </div>
                     <div class="sequence">
                         <label for="query_seq">Sequência 2</label>
                         <textarea name="query_seq" id="query-seq" cols="30" rows="10"
                             oninput="seqAlignmentControler.checkSequence('query-seq')"></textarea>
-                        <p class="textarea-span textarea-invalid" id="query-seq-span">A Sequencia acima é inválida</p>
+                        <p class="textarea-span textarea-invalid" id="query-seq-span">A Sequência acima é inválida
+                        </p>
                     </div>
                 </div>
                 <div class="selector">
@@ -42,10 +56,10 @@
                 </div>
                 <div class="selector" id="alignment-type-div">
                     <p style="font-weight:bold;">Tipo do alinhamento:</p>
-                    <input class="selection" type="radio" name="alignment_type" id='local' value="local" checked>
-                    <label class="label" for="local">Local</label>
-                    <input class="selection" type="radio" name="alignment_type" id='global' value="global">
+                    <input class="selection" type="radio" name="alignment_type" id='global' value="global" checked>
                     <label class="label" for="global">Global</label>
+                    <input class="selection" type="radio" name="alignment_type" id='local' value="local">
+                    <label class="label" for="local">Local</label>
                 </div>
                 <div class="selector" id="score-schema-div">
                     <p style="font-weight:bold;">Pontuação:</p>
@@ -150,17 +164,31 @@
                     <label>Extender gap no fim da sequência 2</label>
 
                 </div>
-                <input class="form-submit" id="form-submit" type="submit" value="Alinhar">
+                <input class="form-submit" id="form-submit" type="submit" value="Alinhar" disabled>
             </form>
         </section>
     </section>
+    {% if received %}
+    <div class="main-seq-output" id="alignments">
+    </div>{% endif %}
 </main>
 {% endblock %}
 
 {% block scripts %}
 <script src="{{url_for('static', filename='js/controller/SeqAlignmentControler.js')}}?v={{today_date}}"></script>
 <script src="{{url_for('static', filename='js/helpers/SequenceRegEx.js')}}?v={{today_date}}"></script>
+<script src="{{url_for('static', filename='js/views/View.js')}}?v={{today_date}}"></script>
+<script src="{{url_for('static', filename='js/views/SeqAlignmentView.js')}}?v={{today_date}}"></script>
+
+{% if received %}
+<script>
+    let alignments = {{ alignment_data | safe }}
+    console.log(alignments)
+    const seqAlignmentControler = new SeqAlignmentControler(alignments)
+</script>
+{% else %}
 <script>
     const seqAlignmentControler = new SeqAlignmentControler()
 </script>
+{% endif %}
 {% endblock %}

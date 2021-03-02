@@ -11,7 +11,12 @@ class Aligner():
     @staticmethod
     def align(id):
 
-        object = Alignment_model.query.get(id).__dict__
+        try:
+            object = Alignment_model.query.get(id).__dict__
+
+        except Exception as err:
+            print(err)
+            return None, err
 
         aligner = Align.PairwiseAligner()
 
@@ -62,23 +67,47 @@ class Aligner():
                 aligner.query_right_extend_gap_score = object['query_right_extend_gap_score']
 
         try:
+            import json
             target = object['target_seq']
             query = object['query_seq']
             set_scores()
             pairwisealignments = aligner.align(target, query)
-            alignments_list = [Aligner._format_generalized(
-                alignment) for alignment in pairwisealignments]
-            epsilon = aligner.epsilon
-            algorithm = aligner.algorithm
-            return epsilon, algorithm, alignments_list, None
+            alignment_list = Aligner.alignments_to_list(pairwisealignments)
+            alignment_data = {
+                "seq_type": object['seq_type'],
+                "alignment_type": object['alignment_type'],
+                "algorithm": str(aligner.algorithm),
+                "alignment_list": alignment_list,
+                "epsilon": str(aligner.epsilon),
+                "score": pairwisealignments.score,
+            }
+            return json.dumps(alignment_data), None
 
         except Exception as err:
+            return None, err
 
-            return None, None, None, err
+    @staticmethod
+    def alignments_to_list(alignments):
+        def format(alignment):
+            return {
+                "target": alignment.target,
+                "query": alignment.query,
+                "path": [list(p) for p in alignment.path]
+            }
+        try:
+            if alignments[100]:
+                print("TRY")
+                return [format(alignments[i]) for i in range(100)]
+        except:
+            print("Except")
+            return [format(
+                    alignment) for alignment in alignments]
 
     # TODO REMAKE
     @staticmethod
     def parse_form(form):
+        print(form.get("target_seq"))
+        print(form.get("query_seq"))
         return Alignment_model(target_seq=form.get("target_seq"),
                                query_seq=form.get("query_seq"),
                                alignment_type=form.get("alignment_type"),
@@ -122,84 +151,3 @@ class Aligner():
 
         except Exception as err:
             return None, None, None, err
-
-    @staticmethod
-    def _format_generalized(alignment):
-        seq1 = alignment.target
-        seq2 = alignment.query
-        n1 = len(seq1)
-        n2 = len(seq2)
-        aligned_seq1 = []
-        aligned_seq2 = []
-        pattern = []
-        path = alignment.path
-        end1, end2 = path[0]
-        if end1 > 0 or end2 > 0:
-            if end1 <= end2:
-                for c2 in seq2[: end2 - end1]:
-                    s2 = str(c2)
-                    s1 = " " * len(s2)
-                    aligned_seq1.append(s1)
-                    aligned_seq2.append(s2)
-                    pattern.append(s1)
-            else:  # end1 > end2
-                for c1 in seq1[: end1 - end2]:
-                    s1 = str(c1)
-                    s2 = " " * len(s1)
-                    aligned_seq1.append(s1)
-                    aligned_seq2.append(s2)
-                    pattern.append(s2)
-        start1 = end1
-        start2 = end2
-        for end1, end2 in path[1:]:
-            if end1 == start1:
-                for c2 in seq2[start2:end2]:
-                    s2 = str(c2)
-                    s1 = "-" * len(s2)
-                    aligned_seq1.append(s1)
-                    aligned_seq2.append(s2)
-                    pattern.append(s1)
-                start2 = end2
-            elif end2 == start2:
-                for c1 in seq1[start1:end1]:
-                    s1 = str(c1)
-                    s2 = "-" * len(s1)
-                    aligned_seq1.append(s1)
-                    aligned_seq2.append(s2)
-                    pattern.append(s2)
-                start1 = end1
-            else:
-                for c1, c2 in zip(seq1[start1:end1], seq2[start2:end2]):
-                    s1 = str(c1)
-                    s2 = str(c2)
-                    m1 = len(s1)
-                    m2 = len(s2)
-                    if c1 == c2:
-                        p = "|"
-                    else:
-                        p = "."
-                    if m1 < m2:
-                        space = (m2 - m1) * " "
-                        s1 += space
-                        pattern.append(p * m1 + space)
-                    elif m1 > m2:
-                        space = (m1 - m2) * " "
-                        s2 += space
-                        pattern.append(p * m2 + space)
-                    else:
-                        pattern.append(p * m1)
-                    aligned_seq1.append(s1)
-                    aligned_seq2.append(s2)
-                start1 = end1
-                start2 = end2
-        aligned_seq1 = " ".join(aligned_seq1)
-        aligned_seq2 = " ".join(aligned_seq2)
-        pattern = " ".join(pattern)
-        align_dict = {
-            'target': aligned_seq1,
-            'query': aligned_seq2,
-            'pattern': pattern,
-            'score': alignment.score,
-            'path': path
-        }
-        return align_dict

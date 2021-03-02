@@ -1,5 +1,5 @@
 class SeqAlignmentControler {
-    constructor(alignmentList = null, epsilon = null, algorithm = null) {
+    constructor(data = null) {
         const $ = document.querySelector.bind(document)
 
         // divs
@@ -32,10 +32,30 @@ class SeqAlignmentControler {
         this._seqRegEx = new SequenceRegEx()
 
 
-        // if (alignmentList && epsilon && algorithm) {
-        //     this._alignmentView = new AlignmentView("#alignments")
-        //     this._alignmentView.update(alignmentList, epsilon, algorithm)
-        // }
+        if (data) {
+            this._alignmentView = new SeqAlignmentView($("#alignments"), data)
+            this.toggleDiv("sequence-input")
+            this.getItemSelector()
+
+        }
+    }
+
+    toggleDiv(id) {
+        this._alignmentView.openCloseDiv(id)
+    }
+
+    getItemSelector(e) {
+        let choice = document.getElementById("direct-choice")
+        choice.addEventListener("keyup", (e) => {
+            if (e.keyCode === 13) {
+                this.getItem(parseInt(choice.value) - 1)
+                choice.focus()
+            }
+        })
+    }
+
+    getItem(index) {
+        this._alignmentView.update(parseInt(index))
     }
 
     checkSequence(id) {
@@ -58,7 +78,7 @@ class SeqAlignmentControler {
 
         if (sequence.value == "") {
 
-            _validSequence()
+            _invalidSequence()
 
         } else if (document.getElementById("dna-seq").checked) {
             if (!this._seqRegEx.checkDNA(sequence.value)) {

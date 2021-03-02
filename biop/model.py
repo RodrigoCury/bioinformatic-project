@@ -22,6 +22,7 @@ class Sequence_model(db.Model):
 
 class Alignment_model(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    seq_type = db.Column(db.String, nullable=True)
     target_seq = db.Column(db.String, nullable=False)
     query_seq = db.Column(db.String, nullable=False)
     alignment_type = db.Column(db.String, nullable=False)

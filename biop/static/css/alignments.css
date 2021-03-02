@@ -1,0 +1,117 @@
+.main-seq-output {
+    border: 2px solid #1e00b8;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 15px 15px 15px 0;
+}
+
+.alignment-data {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.alignment-data-t {
+    background-color: #1e00b8;
+    color: #FFF;
+}
+.alignment-data-r {
+    text-transform: capitalize;
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+.alignment-data-t , .alignment-data-r{
+    padding: 8px 20px;
+}
+
+.alignment {
+    padding: 10px;
+    font-size: 1.2em;
+    margin: 10px 10px;
+    overflow-x: scroll;
+    height: auto;
+    border: 1px solid #1e00b8;
+    border-radius: 5px;
+    background : -moz-linear-gradient(left,  #656566, white, #656566); /* Firefox 3.6+ */
+    background : -webkit-linear-gradient(left, #a9a9a9aa, white, white, white, white, white, white, white, white, white, white, white, white, white, white, white, white, white, #A9A9A9aa);
+}
+
+
+.alignment-chooser {
+    display: flex;
+    flex-flow: row;
+    font-size: .8em;
+    justify-content: space-between;
+    align-items: center;
+}
+.alignment-choice {
+    width: 3em;
+}
+
+
+.direct-choice, .previous-next-choice {
+    display: flex;
+    flex-flow: row;
+    justify-content:space-around;
+    align-items: center;
+}
+
+.choice-submit {
+    align-items: center;
+    width: 30px;
+    max-height: 30px;
+    background: linear-gradient(90deg, #021B79, #0575E6, #205E9B);
+    border: none;
+    padding: 5px 5px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: 0.3s;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.choice-submit:hover:enabled {
+    transition: 0.3s;
+    border: 1px dotted #0575E6;
+}
+
+.choice-submit:active:enabled {
+    box-shadow: 1px 1px 2px black;
+}
+
+.choice-submit:disabled {
+    background: linear-gradient(90deg, #5f6064, #d5dbe0, #8d9297);
+}
+
+.csv {
+    width: 50px;
+    max-height: 30px;
+    background: linear-gradient(90deg, #021B79, #0575E6, #205E9B);
+    border: none;
+    padding: 5px 5px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: 0.3s;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.csv:hover:enabled {
+    transition: 0.3s;
+    border: 1px dotted #0575E6;
+}
+
+.csv:active:enabled {
+    box-shadow: 1px 1px 2px black;
+}
+
+.csv:disabled {
+    background: linear-gradient(90deg, #5f6064, #d5dbe0, #8d9297);
+}

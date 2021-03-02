@@ -1,3 +1,39 @@
+.form-parent-node {
+    position: relative;
+    padding: 15px;
+}
+
+.new-alignment{
+    font-size: 1.7em;
+    font-weight: bold;
+    color: #1e00b8;
+}
+
+.form-parent-node-btn {
+    position: absolute;
+    left: calc(100% - 38px);
+    top: 5px;
+    border: 1px solid #1e00b8;
+    border-radius: 4px;
+    width: 1.5em;
+    height: 1.5em;
+    padding: 3px
+}
+
+.rotate {
+    transform:rotateX(180deg);
+    transition: 200ms;
+}
+
+.form-parent-node-btn:hover {
+    box-shadow: 1px 1px 2px gray;
+    transition: 200ms;
+}
+
+.form-parent-node-btn:active {
+    transition: 200ms;
+    box-shadow: inset 1px 1px 2px gray;
+}
 .sequence-input{
     padding:10px;
     border: 2px solid #1e00b8;
@@ -77,15 +113,24 @@ textarea {
     display: inline-block;
     font-size: 16px;
     transition: 0.3s;
+    border: 1px solid white;
 }
 
-.form-submit:hover {
+.form-submit:hover:enabled {
     transition: 0.3s;
-    background-color: #2100c9;
+    border: 1px dotted #0575E6;
 }
 
-.form-submit:active {
+.form-submit:active:enabled {
     box-shadow: 1px 1px 2px black;
+}
+
+.form-submit:disabled {
+    background: linear-gradient(90deg, #5f6064, #d5dbe0, #8d9297);
+}
+.hidden {
+    transition: 300ms;
+    display: none;
 }
 
 .none{

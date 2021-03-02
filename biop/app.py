@@ -13,6 +13,7 @@ from datetime import datetime
 def create_flask_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///seq.db'
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
     app.app_context().push()
     app.url_map.strict_slashes = False
@@ -59,29 +60,7 @@ def genetic_translator(seq_id=None):
 @app.route("/seq_alignment/<int:align_id>", methods=["GET", "POST"])
 def seq_alignment(align_id=None):
 
-    # if request.method == "POST":
-
-    #     new_id, err = add_to_db(Aligner.parse_form(request.form))
-    #     if err:
-    #         print(err)
-    #         return "NOT OKAY"
-    #     return redirect(url_for("seq_alignment", align_id=new_id, add_to_db_error=err))
-
-    # elif align_id:
-    #     epsilon, algorithm, alignment_list, err = Aligner.align(align_id)
-    #     if err:
-    #         print("AAAAAAAAAAAAAA")
-    #         print(err)
-    #         print("AAAAAAAAAAAAAA")
-    #     lista = alignment_list
-    #     return json.dumps(lista)
-
-    # else:
-    #     pass
-
     if request.method == "POST":
-        import pprint
-        pprint.pprint(dict(request.form))
 
         new_id, err = add_to_db(Aligner.parse_form(request.form))
         if err:
@@ -89,15 +68,11 @@ def seq_alignment(align_id=None):
         return redirect(url_for("seq_alignment", align_id=new_id, add_to_db_error=err))
 
     elif align_id:
-        epsilon, algorithm, alignment_list, err = Aligner.align(align_id)
-        print(algorithm)
-        print(epsilon)
-        print(alignment_list)
-        print(json.dumps(alignment_list))
+        alignment_data, err = Aligner.align(align_id)
         if err:
-            print(err)
+            raise err
             return render_template("seq-alignment.html", err=err)
-        return render_template("seq-alignment.html", alignment_list=json.dumps(alignment_list), epsilon=epsilon, algorithm=algorithm)
+        return render_template("seq-alignment.html", received=True, alignment_data=alignment_data)
 
     else:
         return render_template("seq-alignment.html")
