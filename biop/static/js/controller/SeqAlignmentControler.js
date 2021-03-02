@@ -74,11 +74,11 @@ class SeqAlignmentControler {
             this.postButton.disabled = false
         }
 
-        sequence.value = sequence.value.replace(/\s\r\n|\n|\r/g, "")
+        sequence.value = sequence.value.replace(/\s\r\n|\n|\r/g, "").toUpperCase();
 
         if (sequence.value == "") {
 
-            _invalidSequence()
+            _validSequence()
 
         } else if (document.getElementById("dna-seq").checked) {
             if (!this._seqRegEx.checkDNA(sequence.value)) {
