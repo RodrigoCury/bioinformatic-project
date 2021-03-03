@@ -12,7 +12,7 @@
         <form action="/" method="POST">
 
             <textarea class="seq-input-area" id="sequence" name="sequence" type="textarea"
-                placeholder="Input a DNA, RNA or protein sequence or a FASTA text"
+                placeholder="Input a DNA, RNA or protein sequence"
                 oninput="sequenceController.checkSequence()"></textarea>
             <p class="textarea-span textarea-invalid" id="sequence-span">A Sequência acima é inválida</p>
 
@@ -20,9 +20,6 @@
                 <input class="seq-type-selector-choice" type="radio" id="dna-seq" name="seq" value="dna-seq" checked
                     onchange="sequenceController.checkSequence()">
                 <label class="seq-type-selector-label" for="dna-seq">DNA</label>
-                <input class="seq-type-selector-choice" type="radio" id="rna-seq" name="seq" value="rna-seq"
-                    onchange="sequenceController.checkSequence()">
-                <label class="seq-type-selector-label" for="rna-seq">RNA</label>
                 <input class="seq-type-selector-choice" type="radio" id="protein-seq" name="seq" value="protein-seq"
                     onchange="sequenceController.checkSequence()">
                 <label class="seq-type-selector-label" for="protein-seq">Proteína</label>

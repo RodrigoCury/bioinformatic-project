@@ -74,7 +74,7 @@ class SeqAlignmentControler {
             this.postButton.disabled = false
         }
 
-        sequence.value = sequence.value.replace(/\s\r\n|\n|\r/g, "").toUpperCase();
+        sequence.value = sequence.value.replaceAll(/\s\r\n|\n|\r/g, "").toUpperCase();
 
         if (sequence.value == "") {
 
