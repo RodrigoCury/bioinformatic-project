@@ -109,9 +109,9 @@ class SeqAlignmentControler {
     }
 
     onClickDNA(e) {
-        this._subMatrixDnaDiv.classList.remove("none")
-        this._subMatrixDna.disabled = false
-        this._subMatrixDna.click()
+        // this._subMatrixDnaDiv.classList.remove("none")
+        // this._subMatrixDna.disabled = false
+        // this._subMatrixDna.click()
         this._subMatrixProteinDiv.classList.add("none")
         this._subMatrixProtein.disabled = true
     }
